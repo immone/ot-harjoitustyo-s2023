@@ -1,0 +1,57 @@
+commit 3ad1e72e94da2a90cda9e0f3950874748c90e577
+Author: immone <antti.imm1n@gmail.com>
+Date:   Tue Nov 7 18:37:24 2023 +0200
+
+    try -p parameter
+
+ eka.txt    | 2 +-
+ kolmas.txt | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 00694165e9dfa7d067548ccf3209b8df6978bac8
+Author: immone <antti.imm1n@gmail.com>
+Date:   Tue Nov 7 18:36:06 2023 +0200
+
+    jeps
+
+ kolmas.txt     | 0
+ stuff/asds.txt | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 3b296767b46ad9329b8f426f9c1c9fb59421921a
+Author: immone <antti.imm1n@gmail.com>
+Date:   Tue Nov 7 18:35:19 2023 +0200
+
+    change name
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit cd0a61145828bd9f5fec83e82e42a280769fa0d5
+Author: immone <antti.imm1n@gmail.com>
+Date:   Tue Nov 7 18:34:40 2023 +0200
+
+    edit and remove toinen.txt
+
+ tiedosto.txt | 2 +-
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+commit 2997e6d5db3fdb584895d43b037b6f20db445919
+Author: immone <antti.imm1n@gmail.com>
+Date:   Tue Nov 7 18:31:46 2023 +0200
+
+    muutos ja lisays
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit f8194a3967930847a0aaa6a365aea088b0a27375
+Author: immone <antti.imm1n@gmail.com>
+Date:   Tue Nov 7 18:30:51 2023 +0200
+
+    add tiedosto.txt
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
