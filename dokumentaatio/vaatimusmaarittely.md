@@ -8,11 +8,6 @@ kysymyksien vaativuustaso ja aihealue.
 
 ## Käyttöliittymäluonnos
 
-Sovellus koostuu kolmesta näkymästä: ensimmäinen näkymä mahdollistaa
-sallii käyttäjän vaikuttaa tehtävien tasoon, toisessa näkymässä
-voi spesifioida kysymyksien aihetta ja viimeisessä näkymässä käyttäjä
-pääsee tekemään tehtäviä.
-
 ## Perusversion tarjoama toiminnallisuus
 
 ## Käynnistyksen yhteydessä
