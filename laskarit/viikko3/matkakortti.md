@@ -18,8 +18,9 @@ sequenceDiagram
     lippu_luukku ->> main: kallen_kortti
     deactivate lippu_luukku
     
-    main->>rautatietori : lataa_arvoa(kallen_kortti, 3)
+    main->>rautatietori: lataa_arvoa(kallen_kortti, 3)
     activate rautatietori
     rautatietori->>kallen_kortti: kasvata_arvoa(3)
     kallen_kortti -->> rautatietori
+
 ```
