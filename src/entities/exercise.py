@@ -131,7 +131,6 @@ class MultipleChoice(Exercise):
                 True, jos vastaus on oikein.
                 False, jos vastaus on väärin.
         """
-        print(self.n)
         if a < 0 or a > self.n:
             raise ValueError("The answer should be an integer between 1 and n.")
         self.__answers.append(a)
