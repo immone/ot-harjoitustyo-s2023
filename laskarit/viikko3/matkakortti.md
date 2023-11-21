@@ -23,8 +23,5 @@ sequenceDiagram
     rautatietori->>kallen_kortti: kasvata_arvoa(3)
     kallen_kortti ->> rautatietori
     deactivate kallen_kortti
-    rautatietori ->> main
-    deactivate rautatietori
-    
 
 ```
