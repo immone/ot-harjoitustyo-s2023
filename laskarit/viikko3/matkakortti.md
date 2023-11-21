@@ -20,6 +20,5 @@ sequenceDiagram
     
     main->>rautatietori : lataa_arvoa(kallen_kortti, 3)
     activate rautatietori
-    rautatietori-->>kallen_kortti: kasvata_arvoa(3)
-    activate kallen_kortti
+    rautatietori->>kallen_kortti
 ```
