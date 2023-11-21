@@ -5,7 +5,7 @@ Sovelluksen avulla käyttäjän on mahdollista kerrata abstraktin algebran taito
 ## Dokumentaatio
 ### [Tuntikirjanpito](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/dokumentaatio/tuntikirjanpito.md)
 ### [Vaatimusmäärittely](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/dokumentaatio/vaatimusmaarittely.md)
-## [Changelog](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/dokumentaatio/changelog.md)
+### [Changelog](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/dokumentaatio/changelog.md)
 
 ## Asennus
 1. Asenna riippuvuudet komennolla
