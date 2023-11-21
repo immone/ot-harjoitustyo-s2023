@@ -24,7 +24,7 @@ sequenceDiagram
     activate kallen_kortti
     kallen_kortti -->>rautatietori: ()
     deactivate kallen_kortti
-    rautatietori ->> main: ()
+    rautatietori -->> main: ()
     deactivate rautatietori
     
    	main ->> ratikka6: osta_lippu(kallen_kortti, 0)
@@ -37,15 +37,15 @@ sequenceDiagram
    	activate kallen_kortti
    	kallen_kortti -->> ratikka6: ()
    	deactivate kallen_kortti
-   	ratikka6 ->> main: true
+   	ratikka6 -->> main: true
    	deactivate ratikka6
    	
    	main ->> bussi244: osta_lippu(kallen_kortti, 2)
    	activate bussi244
-   	bussi224 ->> kallen_kortti: kortti.arvo
+   	bussi244 ->> kallen_kortti: kortti.arvo
    	activate kallen_kortti
    	kallen_kortti ->> bussi244: 1.5
    	deactivate kallen_kortti
-   	bussi244 ->> main: false
+   	bussi244 -->> main: false
    	deactivate bussi244
 ```
