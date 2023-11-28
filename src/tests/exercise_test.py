@@ -1,6 +1,7 @@
 import unittest
 from src.entities.exercise import Exercise, MultipleChoice, TheoremExercise
 
+
 class TestExercise(unittest.TestCase):
 
     def setUp(self):

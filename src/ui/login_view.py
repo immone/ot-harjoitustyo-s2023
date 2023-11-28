@@ -1,6 +1,7 @@
 from tkinter import ttk, StringVar, constants
 from services.exercise_service import exercise_service, InvalidCredentialsError
 
+
 class LoginView:
     """Käyttäjän kirjautumisesta vastaava näkymä."""
 

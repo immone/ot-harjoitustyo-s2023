@@ -1,5 +1,6 @@
 import json
 
+
 class Parser:
     """ Luokka, joka lukee tehtävät .json-tiedostosta.
         Attributes:
@@ -8,6 +9,7 @@ class Parser:
             exercise_count:
                 Kokonaislukuarvo, joka kuvaa luettujen tehtävien määrää
     """
+
     def __init__(self):
         self._exercises = []
         self.exercise_count = len(self._exercises)
@@ -24,8 +26,7 @@ class Parser:
                     Merkkijonoarvo, joka on luettavan tiedoston nimi.
 
         """
-        f = open(exercise_file)
-        data = json.load(f)
+        with open(exercise_file, encoding='UTF-8') as f:
+            data = json.load(f)
         for ex in data:
             self._exercises.append(ex)
-

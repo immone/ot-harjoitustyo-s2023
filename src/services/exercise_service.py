@@ -1,9 +1,9 @@
 from entities.exercise import Exercise
 from entities.user import User
 
-from repositories.exercise_repository import (
-    exercise_repository as default_todo_repository
-)
+from repositories.exercise_repository import exercise_repository as default_exercise_repository
+from repositories.user_repository import user_repository as default_user_repository
+
 
 
 class InvalidCredentialsError(Exception):
@@ -19,7 +19,8 @@ class ExerciseService:
 
     def __init__(
         self,
-        exercise_repository = default_exercise_repository,
+        exercise_repository=default_exercise_repository,
+        user_repository =  default_user_repository
     ):
         """Luokan konstruktori. Luo uuden sovelluslogiikasta vastaavan palvelun.
 
@@ -35,11 +36,11 @@ class ExerciseService:
         self._exercise_repository = exercise_repository
         self._user_repository = user_repository
 
-    def create_exercise(self, type, attempts, hint=None, game=None, ex_id=None):
+    def create_exercise(self, description, attempts, hint=None, game=None, ex_id=None):
         """Luo uuden tehtävän.
 
         Args:
-            type:
+            description:
                 Merkkijonoarvo, joka kuvaa tehtävää.
             attemptsLeft:
                  Yksityinen.
@@ -58,7 +59,8 @@ class ExerciseService:
             Luotu tehtävä Exercise-olion muodossa.
         """
 
-        exercise = Exercise(type=type, attempts=attempts, hint=hint, game=game, ex_id=ex_id)
+        exercise = Exercise(description=description, attempts=attempts,
+                            hint=hint, game=game, ex_id=ex_id)
 
         return self._exercise_repository.create(exercise)
 
@@ -73,8 +75,10 @@ class ExerciseService:
         if not self._user:
             return []
 
-        exercises = self._exercise_repository.find_by_username(self._user.username)
-        undone_exercises = filter(lambda exercise: not exercise.done, exercises)
+        exercises = self._exercise_repository.find_by_username(
+            self._user.username)
+        undone_exercises = filter(
+            lambda exercise: not exercise.done, exercises)
 
         return list(undone_exercises)
 

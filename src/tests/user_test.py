@@ -1,6 +1,7 @@
 import unittest
 from src.entities.user import User
 
+
 class TestExercise(unittest.TestCase):
 
     def setUp(self):

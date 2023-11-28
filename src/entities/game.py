@@ -1,5 +1,5 @@
 import uuid
-from src.entities.question_generator import QuestionGenerator, GroupQuestionGenerator
+from src.entities.question_generator import GroupQuestionGenerator
 
 
 class Game:
@@ -27,11 +27,11 @@ class Game:
 
     """
 
-    def __init__(self, type, n, difficulty, user, game_id=None):
+    def __init__(self, description, n, difficulty, user, game_id=None):
         """Luokan konstruktori, joka luo uuden tehtävän.
 
         Args:
-            type:
+            description:
                 Merkkijonoarvo, joka kuvaa pelin tyyppiä.
             done:
                 Vapaaehtoinen, oletusarvoltaan False.
@@ -50,13 +50,18 @@ class Game:
 
         self.difficulty = difficulty
         self.n = n
-        self.type = type
+        self.description = description
         self.done = False
         self.__user = user
         self.id = game_id or str(uuid.uuid4())
-        self.__generator = GroupQuestionGenerator(self.n, 3, self.difficulty, type, 1)
+        self.__generator = GroupQuestionGenerator(
+            self.n, 3, self.difficulty, type, 1)
         self.__problems = self.__generator.fetch_problems()
 
     def player(self):
         """ Palauttaa peliä pelaavan User-olion. """
         return self.__user
+
+    def problems(self):
+        """ Palauttaa Game-olioon liittyvät tehtävät."""
+        return self.__problems

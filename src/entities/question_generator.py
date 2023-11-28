@@ -1,6 +1,4 @@
-import random
-from src.entities.parser import Parser
-from src.entities.exercise import *
+from src.entities.exercise import DefinitionExercise
 # Refaktoroi johonkin järkevämpään paikkaan
 
 QUESTIONS = [
@@ -9,16 +7,17 @@ QUESTIONS = [
              "Distributivity, an inverse element under an operation and a neutral element"]
 ]
 
-MOCK_YAML = {"id" : { "difficulty" : "Easy",
-                      "type": "Group definition",
-                      "correct" : 0,
-                      "attempts": 2,
-                      'hint':   "You don't need one.",
-                      "options": QUESTIONS,
-                      "question": "What is included in the definition of a group?",
-                      "id" : 1337
-                      }
-}
+MOCK_YAML = {"id": {"difficulty": "Easy",
+                    "description": "Group definition",
+                    "correct": 0,
+                    "attempts": 2,
+                    'hint':   "You don't need one.",
+                    "options": QUESTIONS,
+                    "question": "What is included in the definition of a group?",
+                    "id": 1337
+                    }
+             }
+
 
 class QuestionGenerator:
     """Luokka, joka generoi tehtäväkysymyset.
@@ -36,7 +35,7 @@ class QuestionGenerator:
             Kokonaislukuarvo, joka kuvaa yritysten määrää.
     """
 
-    def __init__(self, n, cn, difficulty, type, attempts):
+    def __init__(self, n, cn, difficulty, description, attempts):
         """Luokan konstruktori, joka luo uuden kysymysgeneraattorin.
 
         Args:
@@ -53,7 +52,7 @@ class QuestionGenerator:
         self.cn = cn
         self.n = n
         self.difficulty = difficulty
-        self.type = type
+        self.description = description
         self.attempts = attempts
 
     def fetch_problems(self):
@@ -77,29 +76,28 @@ class GroupQuestionGenerator(QuestionGenerator):
 
     """
 
-    def __init__(self, n, cn, difficulty, type, attempts):
+    def __init__(self, n, cn, difficulty, description, attempts): # pylint: disable=useless-parent-delegation
         """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
         """
-        super().__init__(n, cn, difficulty, type, attempts)
+        super().__init__(n, cn, difficulty, description, attempts)
 
     def fetch_problems(self):
         out = []
-        for q in range(self.n):
-            next = self.randomized_problem(self.cn, self.difficulty)
-            out.append(next)
+        for q in range(self.n): # pylint: disable=unused-variable
+            new_problem = self.randomized_problem(self.cn, self.difficulty)
+            out.append(new_problem)
         return out
 
     def randomized_problem(self, choices, difficulty):
         ex = MOCK_YAML['id']
-        print(ex)
         options = ex['options']
         question = ex['question']
         correct = ex['correct']
-        new_exercise = DefinitionExercise(ex['type'],
+        new_exercise = DefinitionExercise(ex['description'],
                                           ex['attempts'],
                                           ex['difficulty'],
                                           ex['hint'],
                                           ex['id']
-                                          )
+                                          ) # pylint: disable=duplicate-code
         new_exercise.set_question(question, options, correct)
         return question

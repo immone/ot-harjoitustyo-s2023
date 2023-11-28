@@ -24,11 +24,11 @@ class Exercise:
 
     """
 
-    def __init__(self, type, attempts, difficulty, hint=None, game=None, ex_id=None):
+    def __init__(self, description, attempts, difficulty, hint=None, game=None, ex_id=None):
         """Luokan konstruktori, joka luo uuden tehtävän.
 
         Args:
-            type:
+            description:
                 Merkkijonoarvo, joka kuvaa tehtävää.
             attempts:
                  Kokonaislukuarvo, joka kuvaa yritysten määrää.
@@ -48,9 +48,9 @@ class Exercise:
                 Merkkijonoarvo, joka on tehtäväkohtainen vihje.
         """
 
-        self.__attemptsLeft = attempts
+        self.__attempts_left = attempts
         self.difficulty = difficulty
-        self.type = type
+        self.description = description
         self.hint = hint
         self.done = False
         self.solved = False
@@ -59,12 +59,12 @@ class Exercise:
 
     def is_done(self):
         """Apumetodi. Tarkastaa onko tehtävä ohi."""
-        return self.done or self.__attemptsLeft == 0
+        return self.done or self.__attempts_left == 0
 
     def decrease_attempts(self):
         """Apumetodi. Vähentää yrityksiä yhdellä. """
-        if self.__attemptsLeft >= 1:
-            self.__attemptsLeft -= 1
+        if self.__attempts_left >= 1:
+            self.__attempts_left -= 1
 
     def end_exercise(self):
         """ Parametriton metodi, joka päättää tehtävän, jos se on ohi
@@ -99,11 +99,11 @@ class MultipleChoice(Exercise):
 
     """
 
-    def __init__(self, type, attempts, difficulty, hint=None, ex_id=None):
+    def __init__(self, description, attempts, difficulty, hint=None, ex_id=None):
         """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
 
         """
-        super().__init__(type, attempts, hint, ex_id)
+        super().__init__(description, attempts, hint, ex_id)
         self.__answers = []
         self.difficulty = difficulty
         self.__questions = {}
@@ -148,38 +148,37 @@ class MultipleChoice(Exercise):
             return True
         if a in self.__answers:
             return False
-        else:
-            self.decrease_attempts()
-            return False
+        self.decrease_attempts()
+        return False
 
 
 class DefinitionExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä määritelmätehtävää.
     """
 
-    def __init__(self, type, attempts, difficulty, hint=None, ex_id=None):
+    def __init__(self, description, attempts, difficulty, hint=None, ex_id=None): # pylint: disable=useless-parent-delegation
         """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
         """
-        super().__init__(type, attempts, difficulty, hint, ex_id)
+        super().__init__(description, attempts, difficulty, hint, ex_id)
 
 
 class ProblemExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä ongelmatehtävää.
     """
 
-    def __init__(self, type, attempts, difficulty, hint=None, ex_id=None):
+    def __init__(self, description, attempts, difficulty, hint=None, ex_id=None): # pylint: disable=useless-parent-delegation
         """ Luokan konstruktori, joka luo uuden ongelmatehtävän.
 
         """
-        super().__init__(type, attempts, difficulty, hint, ex_id)
+        super().__init__(description, attempts, difficulty, hint, ex_id)
 
 
 class TheoremExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä teorematehtävää.
     """
 
-    def __init__(self, type, attempts, difficulty, hint=None, ex_id=None):
+    def __init__(self, description, attempts, difficulty, hint=None, ex_id=None): # pylint: disable=useless-parent-delegation
         """ Luokan konstruktori, joka luo uuden teoreematehtävän.
 
         """
-        super().__init__(type, attempts, difficulty, hint, ex_id)
+        super().__init__(description, attempts, difficulty, hint, ex_id)
