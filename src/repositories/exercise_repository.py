@@ -1,6 +1,6 @@
 from pathlib import Path
 import json
-from enties.parser import Parser
+from entities.parser import Parser
 from entities.exercise import DefinitionExercise
 from repositories.user_repository import user_repository
 from config import EXERCISES_FILE_PATH
@@ -131,13 +131,17 @@ class ExerciseRepository:
         parser = Parser()
         exercises = parser.get_ex(EXERCISES_FILE_PATH)
         for ex in exercises:
-            ex_out.append(DefinitionExercise(ex['type'],
-                                                ex['attempts'],
-                                                ex['difficulty'],
-                                                ex['hint'],
-                                                ex['id']
-                                            )
-                          )
+            options = ex['options']
+            question = ex['question']
+            correct = ex['correct']
+            new_exercise = DefinitionExercise(ex['type'],
+                                    ex['attempts'],
+                                    ex['difficulty'],
+                                    ex['hint'],
+                                    ex['id']
+                                 )
+            new_exercise.set_question(question, options, correct)
+
         return ex_out
 
     def _write(self, exercises):

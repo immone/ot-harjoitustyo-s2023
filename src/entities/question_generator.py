@@ -1,13 +1,25 @@
 import random
-from parser import *
-from exercise import *
+from src.entities.parser import Parser
+from src.entities.exercise import *
 # Refaktoroi johonkin järkevämpään paikkaan
-QUESTIONS_3 = ["0"]
-ANSWERS_3 = [("Easy", "Group definition", "Which parts are included in the definition of a group?", 0, 2),
+
+QUESTIONS = [
             ["Associativity, an inverse element under an operation and a neutral element",
              "Commutativity, an inverse element under an operation and a neutral element",
              "Distributivity, an inverse element under an operation and a neutral element"]
-             ]
+]
+
+MOCK_YAML = {"id" : { "difficulty" : "Easy",
+                      "type": "Group definition",
+                      "correct" : 0,
+                      "attempts": 2,
+                      'hint':   "You don't need one.",
+                      "options": QUESTIONS,
+                      "question": "What is included in the definition of a group?",
+                      "id" : 1337
+                      }
+}
+
 class QuestionGenerator:
     """Luokka, joka generoi tehtäväkysymyset.
 
@@ -78,14 +90,16 @@ class GroupQuestionGenerator(QuestionGenerator):
         return out
 
     def randomized_problem(self, choices, difficulty):
-        nQ = len(QUESTIONS_3)
-        ind = random.randint(0, nQ)
-        q = QUESTIONS_3[ind]
-        a = ANSWERS_3[ind]
-        cor = a[0]
-        random.shuffle(a)
-        correct_index = a.index(cor)
-        if self.type == "definition":
-            question = DefinitionExercise(q[0], choices, self.attempts)
-            question.set_question(q[1], a, correct_index)
+        ex = MOCK_YAML['id']
+        print(ex)
+        options = ex['options']
+        question = ex['question']
+        correct = ex['correct']
+        new_exercise = DefinitionExercise(ex['type'],
+                                          ex['attempts'],
+                                          ex['difficulty'],
+                                          ex['hint'],
+                                          ex['id']
+                                          )
+        new_exercise.set_question(question, options, correct)
         return question

@@ -1,6 +1,5 @@
 import unittest
-from entities.exercise import Exercise, MultipleChoice, TheoremExercise
-
+from src.entities.exercise import Exercise, MultipleChoice, TheoremExercise
 
 class TestExercise(unittest.TestCase):
 

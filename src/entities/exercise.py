@@ -103,7 +103,7 @@ class MultipleChoice(Exercise):
         """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
 
         """
-        super().__init__(type, attempts, hint, user, ex_id)
+        super().__init__(type, attempts, hint, ex_id)
         self.__answers = []
         self.difficulty = difficulty
         self.__questions = {}
@@ -124,7 +124,7 @@ class MultipleChoice(Exercise):
         """
         self.__questions[q] = a
         self.n = len(list(self.__questions.values())[0])
-        if correct < 1 or correct > self.n:
+        if correct < 0 or correct > self.n:
             raise ValueError(
                 "The correct choice should be an integer between 1 and n.")
         self.__correct = correct

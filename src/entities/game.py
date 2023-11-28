@@ -1,5 +1,5 @@
 import uuid
-from question_generator import QuestionGenerator
+from src.entities.question_generator import QuestionGenerator, GroupQuestionGenerator
 
 
 class Game:
@@ -27,19 +27,19 @@ class Game:
 
     """
 
-    def __init__(self, type, n, difficulty, done=False, user=None, game_id=None):
+    def __init__(self, type, n, difficulty, user, game_id=None):
         """Luokan konstruktori, joka luo uuden tehtävän.
 
         Args:
             type:
-                Merkkijonoarvo, joka kuvaa tehtävän tyyppiä.
+                Merkkijonoarvo, joka kuvaa pelin tyyppiä.
             done:
                 Vapaaehtoinen, oletusarvoltaan False.
                 Boolean-arvo, joka kuvastaa, onko peli ohi.
             difficulty:
                 Merkkijonoarvo, joka kuvaa pelin vaikeutta.
             n:
-                Kokonaislukuarvo, joka kuvaa kysymysen lukumäärää.
+                Kokonaislukuarvo, joka kuvaa kysymysten lukumäärää.
             user:
                 Vapaaehtoinen, oletusarvoltaan None.
                 User-olio, joka kuvaa tehtävän omistajaa.
@@ -51,11 +51,12 @@ class Game:
         self.difficulty = difficulty
         self.n = n
         self.type = type
-        self.__problems = self.__generator.fetch_problems()
-        self.done = done
-        self.user = user
+        self.done = False
+        self.__user = user
         self.id = game_id or str(uuid.uuid4())
-        self.__generator = QuestionGenerator(self.n, self.difficulty, type)
+        self.__generator = GroupQuestionGenerator(self.n, 3, self.difficulty, type, 1)
+        self.__problems = self.__generator.fetch_problems()
 
-
-
+    def player(self):
+        """ Palauttaa peliä pelaavan User-olion. """
+        return self.__user

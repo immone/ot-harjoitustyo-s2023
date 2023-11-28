@@ -21,7 +21,7 @@ class User:
 
         self.username = username
         self.password = password
-        self.allGames = []
+        self.all_games = []
         self.skill = skill
         self.__correct = 0
 
@@ -33,6 +33,14 @@ class User:
         """
         self.skill = new
 
+    def get_points(self):
+        """ Metodi, joka palauttaa käyttäjän pistemäärän.
+        """
+
+        return self.__correct
+
     def increase_points(self):
-        """ Metodi, joka kasvaattaa pelaajan oikeita pisteitä yhdellä. """
+        """ Metodi, joka kasvaattaa pelaajan oikeita pisteitä yhdellä.
+        """
+
         self.__correct += 1

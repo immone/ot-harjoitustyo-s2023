@@ -80,8 +80,8 @@ class ExerciseView:
         self._user = exercise_service.get_current_user()
         self._frame = None
         self._create_exercise_entry = None
-        self._todo_list_frame = None
-        self._todo_list_view = None
+        self._exercise_list_frame = None
+        self._exercise_list_view = None
 
         self._initialize()
 
@@ -102,18 +102,18 @@ class ExerciseView:
         self._initialize_exercises()
 
     def _initialize_exercises(self):
-        if self._todo_list_view:
-            self._todo_list_view.destroy()
+        if self._exercise_list_view:
+            self._exercise_list_view.destroy()
 
         exercises = exercise_service.get_undone_exercises()
 
-        self._todo_list_view = GameView(
-            self._todo_list_frame,
+        self._exercise_list_view = GameView(
+            self._exercise_list_frame,
             exercises,
             self._handle_set_exercise_done()
         )
 
-        self._todo_list_view.pack()
+        self._exercise_list_view.pack()
 
     def _initialize_header(self):
         user_label = ttk.Label(
@@ -143,10 +143,10 @@ class ExerciseView:
         if ex_content:
             exercise_service.create_exe(ex_content)
             self._initialize_exercises()
-            self._create_todo_entry.delete(0, constants.END)
+            self._create_exercise_entry.delete(0, constants.END)
 
     def _initialize_footer(self):
-        self._create_todo_entry = ttk.Entry(master=self._frame)
+        self._create_exercise_entry = ttk.Entry(master=self._frame)
 
         create_todo_button = ttk.Button(
             master=self._frame,
@@ -154,7 +154,7 @@ class ExerciseView:
             command=self._handle_create_todo
         )
 
-        self._create_todo_entry.grid(
+        self._create_exercise_entry.grid(
             row=2,
             column=0,
             padx=5,
