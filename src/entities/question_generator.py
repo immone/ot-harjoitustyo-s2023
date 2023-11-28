@@ -1,14 +1,13 @@
 import random
+from parser import *
 from exercise import *
-## Refaktoroi johonkin järkevämpään paikkaan
-QUESTIONS_3 = [("Group definition", "Which parts are included in the definition of a group?")]
-ANSWERS_3 = [
+# Refaktoroi johonkin järkevämpään paikkaan
+QUESTIONS_3 = ["0"]
+ANSWERS_3 = [("Easy", "Group definition", "Which parts are included in the definition of a group?", 0, 2),
             ["Associativity, an inverse element under an operation and a neutral element",
              "Commutativity, an inverse element under an operation and a neutral element",
              "Distributivity, an inverse element under an operation and a neutral element"]
-            ]
-
-
+             ]
 class QuestionGenerator:
     """Luokka, joka generoi tehtäväkysymyset.
 
@@ -65,11 +64,11 @@ class GroupQuestionGenerator(QuestionGenerator):
     """Aliluokka, joka generoi ryhmäteoreettiset kysymykset.
 
     """
+
     def __init__(self, n, cn, difficulty, type, attempts):
         """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
         """
         super().__init__(n, cn, difficulty, type, attempts)
-
 
     def fetch_problems(self):
         out = []
@@ -90,4 +89,3 @@ class GroupQuestionGenerator(QuestionGenerator):
             question = DefinitionExercise(q[0], choices, self.attempts)
             question.set_question(q[1], a, correct_index)
         return question
-

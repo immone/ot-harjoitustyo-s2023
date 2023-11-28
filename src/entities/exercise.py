@@ -1,5 +1,6 @@
 import uuid
 
+
 class Exercise:
     """ Luokka, joka kuvaa yksittäistä tehtävää
 
@@ -7,11 +8,10 @@ class Exercise:
             type:
                 Merkkijonoarvo, joka kuvaa tehtävää.
             attemptsLeft:
-                 Yksityinen.
-                 Kokonaislukuarvo, joka kuvaa yritysten määrää.
-            done:
-                Vapaaehtoinen, oletusarvoltaan False.
-                Boolean-arvo, joka kuvastaa, onko tehtävä jo tehty.
+                Yksityinen.
+                Kokonaislukuarvo, joka kuvaa yritysten määrää.
+            difficulty:
+                Merkkijono, joka kuvaa tehtävän vaikeutta.
             game:
                 Vapaaehtoinen, oletusarvoltaan None.
                 Game-olio, joka kuvaa peliä johon tehtävä kuuluu.
@@ -24,7 +24,7 @@ class Exercise:
 
     """
 
-    def __init__(self, type, attempts, hint = None, done=False, game = None, ex_id=None):
+    def __init__(self, type, attempts, difficulty, hint=None, game=None, ex_id=None):
         """Luokan konstruktori, joka luo uuden tehtävän.
 
         Args:
@@ -34,10 +34,12 @@ class Exercise:
                  Kokonaislukuarvo, joka kuvaa yritysten määrää.
             done:
                 Vapaaehtoinen, oletusarvoltaan False.
-                Boolean-arvo, joka kuvastaa, onko tehtävä jo tehty.
+                Boolean-arvo, joka kuvastaa, onko tehtävä ohi.
             game:
                 Vapaaehtoinen, oletusarvoltaan None.
                 Game-olio, joka kuvaa peliä johon tehtävä kuuluu.
+            solved:
+                Boolean-arvo, joka kuvastaa onko tehtävä tehty oikein.
             ex_id:
                 Vapaaehtoinen, oletusarvoltaan generoitu uuid.
                 Merkkijonoarvo, joku kuvaa tehtävän id:tä.
@@ -47,9 +49,10 @@ class Exercise:
         """
 
         self.__attemptsLeft = attempts
+        self.difficulty = difficulty
         self.type = type
         self.hint = hint
-        self.done = done
+        self.done = False
         self.solved = False
         self.game = game
         self.id = ex_id or str(uuid.uuid4())
@@ -60,7 +63,8 @@ class Exercise:
 
     def decrease_attempts(self):
         """Apumetodi. Vähentää yrityksiä yhdellä. """
-        if self.__attemptsLeft >= 1: self.__attemptsLeft -= 1
+        if self.__attemptsLeft >= 1:
+            self.__attemptsLeft -= 1
 
     def end_exercise(self):
         """ Parametriton metodi, joka päättää tehtävän, jos se on ohi
@@ -83,6 +87,8 @@ class MultipleChoice(Exercise):
         Attributes:
           answers:
             Lista, joka kuvaa mitä kysymyksiä käyttäjä on jo arvannut.
+          difficulty:
+            Merkkijono, joka kuvaa tehtävän vaikeutta.
           questions:
             Kirjasto, joka koostuu kysymyksistä ja vastausvaihtoehdot.
           n:
@@ -93,12 +99,13 @@ class MultipleChoice(Exercise):
 
     """
 
-    def __init__(self, type, attempts, hint = None, done=False, user=None, ex_id=None):
+    def __init__(self, type, attempts, difficulty, hint=None, ex_id=None):
         """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
 
         """
-        super().__init__(type, attempts, hint, done, user, ex_id)
+        super().__init__(type, attempts, hint, user, ex_id)
         self.__answers = []
+        self.difficulty = difficulty
         self.__questions = {}
         self.n = None
         self.__correct = None
@@ -118,7 +125,8 @@ class MultipleChoice(Exercise):
         self.__questions[q] = a
         self.n = len(list(self.__questions.values())[0])
         if correct < 1 or correct > self.n:
-            raise ValueError("The correct choice should be an integer between 1 and n.")
+            raise ValueError(
+                "The correct choice should be an integer between 1 and n.")
         self.__correct = correct
 
     def check_answer(self, a):
@@ -132,7 +140,8 @@ class MultipleChoice(Exercise):
                 False, jos vastaus on väärin.
         """
         if a < 0 or a > self.n:
-            raise ValueError("The answer should be an integer between 1 and n.")
+            raise ValueError(
+                "The answer should be an integer between 1 and n.")
         self.__answers.append(a)
         if a == self.__correct:
             self.solved = True
@@ -143,30 +152,34 @@ class MultipleChoice(Exercise):
             self.decrease_attempts()
             return False
 
+
 class DefinitionExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä määritelmätehtävää.
     """
-    def __init__(self, type, attempts, hint = None, done=False, user=None, ex_id=None):
+
+    def __init__(self, type, attempts, difficulty, hint=None, ex_id=None):
         """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
         """
-        super().__init__(type, attempts, hint, done, user, ex_id)
+        super().__init__(type, attempts, difficulty, hint, ex_id)
 
 
 class ProblemExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä ongelmatehtävää.
     """
-    def __init__(self, type, attempts, hint = None, done=False, user=None, ex_id=None):
+
+    def __init__(self, type, attempts, difficulty, hint=None, ex_id=None):
         """ Luokan konstruktori, joka luo uuden ongelmatehtävän.
 
         """
-        super().__init__(type, attempts, hint, done, user, ex_id)
+        super().__init__(type, attempts, difficulty, hint, ex_id)
+
 
 class TheoremExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä teorematehtävää.
     """
-    def __init__(self, type, attempts, hint = None, done=False, user=None, ex_id=None):
+
+    def __init__(self, type, attempts, difficulty, hint=None, ex_id=None):
         """ Luokan konstruktori, joka luo uuden teoreematehtävän.
 
         """
-        super().__init__(type, attempts, hint, done, user, ex_id)
-
+        super().__init__(type, attempts, difficulty, hint, ex_id)

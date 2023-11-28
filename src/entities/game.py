@@ -1,5 +1,7 @@
 import uuid
 from question_generator import QuestionGenerator
+
+
 class Game:
     """ Luokka, joka kuvaa yksittäistä harjoituspeliä.
 
@@ -25,7 +27,7 @@ class Game:
 
     """
 
-    def __init__(self, type, n, difficulty, done=False, user = None, game_id=None):
+    def __init__(self, type, n, difficulty, done=False, user=None, game_id=None):
         """Luokan konstruktori, joka luo uuden tehtävän.
 
         Args:
@@ -54,3 +56,6 @@ class Game:
         self.user = user
         self.id = game_id or str(uuid.uuid4())
         self.__generator = QuestionGenerator(self.n, self.difficulty, type)
+
+
+
