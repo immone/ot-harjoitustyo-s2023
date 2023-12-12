@@ -62,12 +62,12 @@ QuestionGenerator sekä Exercise-luokilla esiintyy aliluokkia, jotka viittaavat 
       }
 ```
 
-** Tietojen pysyväistallennus
+## Tietojen pysyväistallennus
 
 Pakkauksen _repositories_ luokat `ExerciseRepository` ja `UserRepository` huolehtivat tietojen tallentamisesta SQLite-tietokantaan.
 
 
-** Päätoiminnallisuudet
+## Päätoiminnallisuudet
 
 Uuden käyttäjän luonti etenee seuraavasti, kun käyttöliittymän User- ja Password-kenttiin syötetään halutut arvot:
 
