@@ -1,9 +1,9 @@
 from entities.user import User
-from ui.database_connection import get_database_connection
+from database_connection import get_database_connection
 
 
 def get_user_by_row(row):
-    return User(row["username"], row["password"]) if row else None
+    return User(row["username"], row["password"], row["skill"]) if row else None
 
 
 class UserRepository:
@@ -60,17 +60,17 @@ class UserRepository:
         """Tallentaa käyttäjän tietokantaan.
 
         Args:
-            todo: Tallennettava käyttäjä User-oliona.
+            user: Tallennettava käyttäjä User-oliona.
 
         Returns:
-            Tallennettu käyttjä User-oliona.
+            Tallennettu käyttäjä User-oliona.
         """
 
         cursor = self._connection.cursor()
 
         cursor.execute(
-            "insert into users (username, password) values (?, ?)",
-            (user.username, user.password)
+            "insert into users (username, password, skill) values (?, ?, ?)",
+            (user.username, user.password, user.skill)
         )
 
         self._connection.commit()

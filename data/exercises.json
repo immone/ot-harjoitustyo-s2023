@@ -1,0 +1,19 @@
+{
+  "1337":     [
+    {
+      "difficulty": "Easy",
+      "description": "Group definition",
+      "correct": 0,
+      "attempts": 2,
+      "hint": "You don't need one.",
+      "options": [
+        "Associativity, an inverse element under an operation and a neutral element",
+        "Commutativity, an inverse element under an operation and a neutral element",
+        "Distributivity, an inverse element under an operation and a neutral element"
+      ],
+      "question": "What is included in the definition of a group?",
+      "id": 1337
+    }
+          ]
+
+}

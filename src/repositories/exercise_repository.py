@@ -24,7 +24,7 @@ class ExerciseRepository:
         """Palauttaa kaikki tehtävät.
 
         Returns:
-            Palauttaa listan Todo-olioita.
+            Palauttaa listan Exercise-olioita.
         """
 
         return self._read()
@@ -35,7 +35,7 @@ class ExerciseRepository:
                 Args:
                     Difficulty: Merkkijono, joka kuvaa vaikeutta
                 Returns:
-                    Palauttaa listan Todo-olioita.
+                    Palauttaa listan Exercise-olioita.
                 """
 
         exercises = self.find_all()
@@ -124,22 +124,31 @@ class ExerciseRepository:
         Path(self._file_path).touch()
 
     def _read(self):
+        """ Lukee tehtävät tietokantaan.
+        """
+
         ex_out = []
 
         self._ensure_file_exists()
         parser = Parser()
-        exercises = parser.get_ex(EXERCISES_FILE_PATH)
-        for ex in exercises:
-            options = ex['options']
-            question = ex['question']
-            correct = ex['correct']
-            new_exercise = DefinitionExercise(ex['type'],
-                                              ex['attempts'],
-                                              ex['difficulty'],
-                                              ex['hint'],
-                                              ex['id']
-                                              )
-            new_exercise.set_question(question, options, correct)
+        parser.parse(EXERCISES_FILE_PATH)
+        exercises = parser.get_ex()
+        ids = parser.get_ids()
+        for id in ids:
+            try:
+                ex = exercises[id]
+                options = ex['options']
+                question = ex['question']
+                correct = ex['correct']
+                new_exercise = DefinitionExercise(ex['type'],
+                                                  ex['attempts'],
+                                                  ex['difficulty'],
+                                                  ex['hint'],
+                                                  ex['id']
+                                                  )
+                new_exercise.set_question(question, options, correct)
+            except TypeError:
+                print("Faulty exercise on ID", id)
 
         return ex_out
 

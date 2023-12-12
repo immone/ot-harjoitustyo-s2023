@@ -1,18 +1,18 @@
 from tkinter import ttk, StringVar, constants
-from services.exercise_service import exercise_service, InvalidCredentialsError
+from services.exercise_service import exercise_service, InvalidCredentialsError, UsernameExistsError
 
 
 class LoginView:
     """Käyttäjän kirjautumisesta vastaava näkymä."""
 
-    def __init__(self, root, handle_login, handle_show_create_user_view):
+    def __init__(self, root, handle_login, handle_create_user, handle_show_create_user_view):
         """Luokan konstruktori. Luo uuden kirjautumisnäkymän.
 
         Args:
             root:
                 TKinter-elementti, jonka sisään näkymä alustetaan.
             handle_login:
-                Kutsuttava-arvo, jota kutsutaan kun käyttäjä kirjautuu sisään.
+                Kutsuttava-arvo, jota kutsutaan kun käyttäjä kirjautuu sisään tai
             handle_show_create_user_view:
                 Kutsuttava-arvo, jota kutsutaan kun siirrytään rekisteröitymisnäkymään.
         """
@@ -20,6 +20,7 @@ class LoginView:
         self._root = root
         self._handle_login = handle_login
         self._handle_show_create_user_view = handle_show_create_user_view
+        self._handle_create_user = handle_create_user
         self._frame = None
         self._username_entry = None
         self._password_entry = None
@@ -36,6 +37,13 @@ class LoginView:
         """"Tuhoaa näkymän."""
         self._frame.destroy()
 
+    def _show_error(self, message):
+        self._error_variable.set(message)
+        self._error_label.grid()
+
+    def _hide_error(self):
+        self._error_label.grid_remove()
+
     def _login_handler(self):
         username = self._username_entry.get()
         password = self._password_entry.get()
@@ -46,12 +54,18 @@ class LoginView:
         except InvalidCredentialsError:
             self._show_error("Invalid username or password")
 
-    def _show_error(self, message):
-        self._error_variable.set(message)
-        self._error_label.grid()
+    def _create_user_handler(self):
+        username = self._username_entry.get()
+        password = self._password_entry.get()
 
-    def _hide_error(self):
-        self._error_label.grid_remove()
+        if len(username) == 0 or len(password) == 0:
+            self._show_error("Username and password is required")
+            return
+        try:
+            exercise_service.create_user(username, password)
+            self._handle_create_user()
+        except UsernameExistsError:
+            self._show_error(f"Username {username} already exists")
 
     def _initialize_username_field(self):
         username_label = ttk.Label(master=self._frame, text="Username")
@@ -94,7 +108,7 @@ class LoginView:
         create_user_button = ttk.Button(
             master=self._frame,
             text="Create user",
-            command=self._handle_show_create_user_view
+            command=self._create_user_handler
         )
 
         self._frame.grid_columnconfigure(0, weight=1, minsize=400)

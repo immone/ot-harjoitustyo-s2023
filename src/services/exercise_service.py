@@ -1,7 +1,7 @@
 from entities.exercise import Exercise
 from entities.user import User
 
-from repositories.exercise_repository import exercise_repository as default_exercise_repository
+from repositories.exercise_repository import ex_repository as default_exercise_repository
 from repositories.user_repository import user_repository as default_user_repository
 
 
@@ -20,7 +20,7 @@ class ExerciseService:
     def __init__(
         self,
         exercise_repository=default_exercise_repository,
-        user_repository =  default_user_repository
+        user_repository=default_user_repository
     ):
         """Luokan konstruktori. Luo uuden sovelluslogiikasta vastaavan palvelun.
 
@@ -42,7 +42,7 @@ class ExerciseService:
         Args:
             description:
                 Merkkijonoarvo, joka kuvaa tehtävää.
-            attemptsLeft:
+            attempts:
                  Yksityinen.
                  Kokonaislukuarvo, joka kuvaa yritysten määrää.
            hint:
@@ -64,8 +64,8 @@ class ExerciseService:
 
         return self._exercise_repository.create(exercise)
 
-    def get_undone_todos(self):
-        """Palauttaa kirjautuneen käyttäjän tekemättömät tehtävät.
+    def get_undone_exercises(self):
+        """ Palauttaa kirjautuneen käyttäjän tekemättömät tehtävät.
 
         Returns:
             Palauttaa kirjautuneen käyttäjän tekemättömät tehtävät Exercise-olioden listana.
@@ -156,7 +156,7 @@ class ExerciseService:
         if existing_user:
             raise UsernameExistsError(f"Username {username} already exists")
 
-        user = self._user_repository.create(User(username, password))
+        user = self._user_repository.create(User(username, password, skill="easy"))
 
         if login:
             self._user = user
@@ -164,4 +164,4 @@ class ExerciseService:
         return user
 
 
-todo_service = ExerciseService()
+exercise_service = ExerciseService()
