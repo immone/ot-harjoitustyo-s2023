@@ -1,5 +1,7 @@
 # Algebra-app
 
+## [Release 1](https://github.com/immone/ot-harjoitustyo-s2023/releases/tag/viikko6)
+
 Sovelluksen avulla käyttäjän on mahdollista kerrata abstraktin algebran taitojaan, esimerkiksi ennen tenttiä. Sovelluksessa on mahdollista valita kysymyksien vaativuustaso ja aihealue.
 
 ## Dokumentaatio
