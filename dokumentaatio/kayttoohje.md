@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa projektin viimeisimmän [releasen]([https://github.com/ohjelmistotekniikka-hy/python-todo-app/releases](https://github.com/immone/ot-harjoitustyo-s2023/releases)) lähdekoodi valitsemalla _Assets_-osion alta _Source code_.
+Lataa projektin viimeisimmän [releasen](https://github.com/immone/ot-harjoitustyo-s2023/releases) lähdekoodi valitsemalla _Assets_-osion alta _Source code_.
 
 ## Konfigurointi
 
