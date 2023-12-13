@@ -16,3 +16,7 @@
 - Refaktoroitu viikon 3 luokkia
 - Lisätty Parser-luokka, joka auttaa tehtävätietokannan luonnissa
 - Lisätty testikattavuutta
+  
+## Viikko 6
+- Refaktoroitu luokkia ja tehty tietokantaa selkeämmäksi
+- Lisätty lisää käyttöliittymästä vastaavia luokkia
