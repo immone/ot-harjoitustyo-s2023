@@ -1,6 +1,5 @@
 from tkinter import ttk, StringVar, constants
-from services.exercise_service import exercise_service, InvalidCredentialsError, UsernameExistsError
-
+from services.user_service import user_service, InvalidCredentialsError, UsernameExistsError
 
 class LoginView:
     """Käyttäjän kirjautumisesta vastaava näkymä."""
@@ -49,7 +48,7 @@ class LoginView:
         password = self._password_entry.get()
 
         try:
-            exercise_service.login(username, password)
+            user_service.login(username, password)
             self._handle_login()
         except InvalidCredentialsError:
             self._show_error("Invalid username or password")
@@ -62,7 +61,7 @@ class LoginView:
             self._show_error("Username and password is required")
             return
         try:
-            exercise_service.create_user(username, password)
+            user_service.create_user(username, password)
             self._handle_create_user()
         except UsernameExistsError:
             self._show_error(f"Username {username} already exists")

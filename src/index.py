@@ -4,7 +4,7 @@ from ui.ui import UI
 
 def main():
     window = Tk()
-    window.title("Algebra app")
+    window.title("Algebra-app")
 
     ui_view = UI(window)
     ui_view.start()

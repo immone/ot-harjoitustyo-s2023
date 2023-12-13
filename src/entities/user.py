@@ -6,7 +6,7 @@ class User:
         password: Merkkijonoarvo, joka kuvaa käyttäjän salasanaa.
         skill: Merkkijonoarvo, joka kuvaa tehtävien vaikeustasoa.
         correct: Kokonaislukuarvo, joka kuvaa oikeiden tehtävien lukumäärää
-        allGames: Listam joka kuvaa kaikkia pelattuja pelejä.
+        allGames: Lista, joka kuvaa kaikkia pelattuja pelejä.
     """
 
     def __init__(self, username, password, skill):
@@ -40,7 +40,7 @@ class User:
         return self.__correct
 
     def increase_points(self):
-        """ Metodi, joka kasvaattaa pelaajan oikeita pisteitä yhdellä.
+        """ Metodi, joka kasvattaa pelaajan oikeita pisteitä yhdellä.
         """
 
         self.__correct += 1

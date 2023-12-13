@@ -1,6 +1,7 @@
 from ui.exercise_view import ExerciseView
 from ui.login_view import LoginView
 from ui.choose_difficulty_view import ChooseDifficultyView
+from ui.game_view import GameView
 
 class UI:
     """Sovelluksen käyttöliittymästä vastaava luokka."""
@@ -40,7 +41,7 @@ class UI:
     def _show_exercise_view(self):
         self._hide_current_view()
 
-        self._current_view = ExerciseView(self._root, self._show_login_view)
+        self._current_view = ExerciseView(self._root, self._show_login_view, self._show_game_view)
 
         self._current_view.pack()
 
@@ -54,3 +55,11 @@ class UI:
         )
 
         self._current_view.pack()
+
+    def _show_game_view(self):
+        self._hide_current_view()
+
+        self._current_view = GameView(self._root, self._show_login_view)
+
+        self._current_view.pack()
+

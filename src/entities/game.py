@@ -1,5 +1,5 @@
 import uuid
-from src.entities.question_generator import GroupQuestionGenerator
+from entities.question_generator import QuestionGenerator
 
 
 class Game:
@@ -7,61 +7,53 @@ class Game:
 
         Attributes:
             type:
-                Merkkijonoarvo, joka kuvaa tehtävän tyyppiä.
-            done:
-                Vapaaehtoinen, oletusarvoltaan False.
-                Boolean-arvo, joka kuvastaa, onko peli ohi.
-            n:
-                Kokonaislukuarvo, joka kuvaa kysymysen lukumäärää.
-            difficulty:
-                Merkkijonoarvo, joka kuvaa pelin vaikeutta.
-            problems:
-                Lista, joka kuvaa pelin kaikkia kysmyksiä.
+                Merkkijono arvoista koostuva pari, jonka ensimmäinen arvo kuvaa
+                pelin aihealuetta ja toinen kysymysten laatua
             user:
                 Vapaaehtoinen, oletusarvoltaan None.
                 User-olio, joka kuvaa tehtävän omistajaa.
             game_id:
                 Vapaaehtoinen, oletusarvoltaan generoitu uuid.
                 Merkkijonoarvo, joku kuvaa pelin id:tä.
-
-
     """
 
-    def __init__(self, description, n, difficulty, user, game_id=None):
+    def __init__(self, type, user, game_id=None):
         """Luokan konstruktori, joka luo uuden tehtävän.
 
         Args:
-            description:
-                Merkkijonoarvo, joka kuvaa pelin tyyppiä.
-            done:
-                Vapaaehtoinen, oletusarvoltaan False.
-                Boolean-arvo, joka kuvastaa, onko peli ohi.
-            difficulty:
-                Merkkijonoarvo, joka kuvaa pelin vaikeutta.
-            n:
-                Kokonaislukuarvo, joka kuvaa kysymysten lukumäärää.
+            type:
+                Merkkijono arvoista koostuva pari, jonka ensimmäinen arvo kuvaa
+                pelin aihealuetta ja toinen kysymysten laatua
             user:
                 Vapaaehtoinen, oletusarvoltaan None.
                 User-olio, joka kuvaa tehtävän omistajaa.
-            id:
+            game_id:
                 Vapaaehtoinen, oletusarvoltaan generoitu uuid.
                 Merkkijonoarvo, joku kuvaa pelin id:tä.
+            done:
+                Vapaaehtoinen, oletusarvoltaan False.
+                Boolean-arvo, joka kuvastaa, onko peli ohi.
+
         """
 
-        self.difficulty = difficulty
-        self.n = n
-        self.description = description
+        self.structure = type[0]
+        self.game_type = type[1]
+        self.user = user
+        self.game_id = game_id or str(uuid.uuid4())
+        self.__generator = QuestionGenerator(self.structure, self.game_type, self.user.skill)
+        self.__problems = self.__generator.fetch_problems(1)
         self.done = False
-        self.__user = user
-        self.id = game_id or str(uuid.uuid4())
-        self.__generator = GroupQuestionGenerator(
-            self.n, 3, self.difficulty, type, 1)
-        self.__problems = self.__generator.fetch_problems()
 
     def player(self):
         """ Palauttaa peliä pelaavan User-olion. """
-        return self.__user
+        return self.user
 
     def problems(self):
         """ Palauttaa Game-olioon liittyvät tehtävät."""
         return self.__problems
+
+    def set_done(self, id):
+        self.__problems[id].done = True
+
+    def fetch_problems(self, n):
+        self.__problems = self.__generator.fetch_problems(n)

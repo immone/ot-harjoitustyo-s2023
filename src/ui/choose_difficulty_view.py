@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, StringVar, constants
-from services.exercise_service import exercise_service
+from services.user_service import user_service
+from services.game_service import game_service
 
 
 class ChooseDifficultyView:
@@ -18,7 +19,7 @@ class ChooseDifficultyView:
                 Kutsuttava arvo, jota kutsutaan kun käyttäjä haluaa kirjautua ulos.
         """
         self._root = root
-        self._user = exercise_service.get_current_user()
+        self._user = user_service.get_current_user()
         self._handle_choose_difficulty = handle_choose_difficulty
         self._handle_logout = handle_logout
         self._frame = None
@@ -36,7 +37,7 @@ class ChooseDifficultyView:
         self._frame.destroy()
 
     def _logout_handler(self):
-        exercise_service.logout()
+        game_service.logout()
         self._handle_logout()
 
     def _show_error(self, message):
@@ -61,7 +62,7 @@ class ChooseDifficultyView:
         user_label.grid(row=0, column=0, padx=5, pady=5, sticky=constants.W)
 
         logout_button.grid(
-            row=0,
+            row=2,
             column=1,
             padx=5,
             pady=5,
@@ -98,7 +99,7 @@ class ChooseDifficultyView:
             command=self._difficulty_handle
         )
         choose_difficulty_button.grid(
-            row=2,
+            row=0,
             column=1,
             padx=5,
             pady=5,

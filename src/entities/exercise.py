@@ -5,56 +5,49 @@ class Exercise:
     """ Luokka, joka kuvaa yksittäistä tehtävää
 
         Attributes:
-            type:
+            description:
                 Merkkijonoarvo, joka kuvaa tehtävää.
-            attemptsLeft:
-                Yksityinen.
-                Kokonaislukuarvo, joka kuvaa yritysten määrää.
             difficulty:
                 Merkkijono, joka kuvaa tehtävän vaikeutta.
-            game:
-                Vapaaehtoinen, oletusarvoltaan None.
-                Game-olio, joka kuvaa peliä johon tehtävä kuuluu.
-            ex_id:
-                Vapaaehtoinen, oletusarvoltaan generoitu uuid.
-                Merkkijonoarvo, joku kuvaa tehtävän id:tä.
+            content:
+                Lista. Sisältää tehtävän sisällön; sen ensimmäinen
+                alkio on tehtävän kysymys, seuraavat alkiot vaihtoehtoja ja
+                viimeinen alkio oikea vastaus.
             hint:
                 Vapaaehtoinen, oletusarvoltaan None.
                 Merkkijonoarvo, joka on tehtäväkohtainen vihje.
-
+            ex_id:
+                Vapaaehtoinen, oletusarvoltaan generoitu uuid.
+                Merkkijonoarvo, joku kuvaa tehtävän id:tä.
     """
 
-    def __init__(self, description, attempts, difficulty, hint=None, game=None, ex_id=None):
+    def __init__(self, description, content, difficulty, hint=None, ex_id=None):
         """Luokan konstruktori, joka luo uuden tehtävän.
 
         Args:
             description:
                 Merkkijonoarvo, joka kuvaa tehtävää.
-            attempts:
-                 Kokonaislukuarvo, joka kuvaa yritysten määrää.
-            done:
-                Vapaaehtoinen, oletusarvoltaan False.
-                Boolean-arvo, joka kuvastaa, onko tehtävä ohi.
-            game:
-                Vapaaehtoinen, oletusarvoltaan None.
-                Game-olio, joka kuvaa peliä johon tehtävä kuuluu.
-            solved:
-                Boolean-arvo, joka kuvastaa onko tehtävä tehty oikein.
-            ex_id:
-                Vapaaehtoinen, oletusarvoltaan generoitu uuid.
-                Merkkijonoarvo, joku kuvaa tehtävän id:tä.
+            difficulty:
+                Merkkijono, joka kuvaa tehtävän vaikeutta.
+            content:
+                Lista. Sisältää tehtävän sisällön; sen ensimmäinen
+                alkio on tehtävän kysymys, seuraavat alkiot vaihtoehtoja ja
+                viimeinen alkio oikea vastaus.
             hint:
                 Vapaaehtoinen, oletusarvoltaan None.
                 Merkkijonoarvo, joka on tehtäväkohtainen vihje.
+            ex_id:
+                Vapaaehtoinen, oletusarvoltaan generoitu uuid.
+                Merkkijonoarvo, joku kuvaa tehtävän id:tä.
         """
 
-        self.__attempts_left = attempts
         self.difficulty = difficulty
         self.description = description
+        self.content = content
+        self.__attempts_left = 1
         self.hint = hint
         self.done = False
         self.solved = False
-        self.game = game
         self.id = ex_id or str(uuid.uuid4())
 
     def is_done(self):
@@ -67,16 +60,14 @@ class Exercise:
             self.__attempts_left -= 1
 
     def end_exercise(self):
-        """ Parametriton metodi, joka päättää tehtävän, jos se on ohi
-            ja kasvattaa pelaajan pisteitä, jos hän on vastannut oikein.
+        """ Parametriton metodi, joka päättää tehtävän.
 
         Returns:
             Palauttaa True, jos harjoitus on ohi.
             Muussa tapauksessa palauttaa False.
         """
-        if self.is_done():
-            if self.solved:
-                self.game.user.increase_points()
+        self.done = True
+        if self.solved:
             return True
         return False
 
@@ -85,49 +76,37 @@ class MultipleChoice(Exercise):
     """ Aliluokka, joka mallintaa monivalintakysymystä.
 
         Attributes:
-          answers:
-            Lista, joka kuvaa mitä kysymyksiä käyttäjä on jo arvannut.
-          difficulty:
-            Merkkijono, joka kuvaa tehtävän vaikeutta.
-          questions:
-            Kirjasto, joka koostuu kysymyksistä ja vastausvaihtoehdot.
-          n:
-            Kokonaislukuarvo, joka kuvaa kysymysten määrää
-          correct:
-            Yksityinen.
-            Kuvaa oikean vastauksen indeksiä.
-
+            description:
+                Merkkijonoarvo, joka kuvaa tehtävää.
+            difficulty:
+                Merkkijono, joka kuvaa tehtävän vaikeutta.
+            content:
+                Lista. Sisältää tehtävän sisällön; sen ensimmäinen
+                alkio on tehtävän kysymys, seuraavat alkiot vaihtoehtoja ja
+                viimeinen alkio oikea vastaus.
+            hint:
+                Vapaaehtoinen, oletusarvoltaan None.
+                Merkkijonoarvo, joka on tehtäväkohtainen vihje.
+            ex_id:
+                Vapaaehtoinen, oletusarvoltaan generoitu uuid.
+                Merkkijonoarvo, joku kuvaa tehtävän id:tä.
     """
 
-    def __init__(self, description, attempts, difficulty, hint=None, ex_id=None):
+    def __init__(self, description, content, difficulty, hint=None, ex_id=None):
         """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
 
         """
-        super().__init__(description, attempts, hint, ex_id)
-        self.__answers = []
-        self.difficulty = difficulty
-        self.__questions = {}
-        self.n = None
-        self.__correct = None
-        self.solved = False
-
-    def set_question(self, q, a, correct):
-        """ Metodi, joka lisää kysymyksen monivalintaan.
-
-            Args:
-                q:
-                    Merkkijonoarvo, joka kuvaa kysymystä.
-                a:
-                    Lista, jossa on vastaukset.
-                correct:
-                    Kokonaislukuarvo, joka kuvaa oikean vastauksen indeksiä (alkaen luvusta 1).
-        """
-        self.__questions[q] = a
-        self.n = len(list(self.__questions.values())[0])
-        if correct < 0 or correct > self.n:
+        self.n = len(content)
+        if self.n < 3:
             raise ValueError(
-                "The correct choice should be an integer between 1 and n.")
-        self.__correct = correct
+                "A multiple choice exercise should have at least one question")
+        self.question = content[0]
+        self.options = content[1:-1]
+        self.answer = content[-1]
+        if self.answer < 0 or self.answer >= self.n:
+            raise ValueError(
+                "The correct choice should be one of the options")
+        super().__init__(description, content, difficulty, hint, ex_id)
 
     def check_answer(self, a):
         """ Metodi, joka tarkastaa onko vastaus oikein.
@@ -141,14 +120,11 @@ class MultipleChoice(Exercise):
         """
         if a < 0 or a > self.n:
             raise ValueError(
-                "The answer should be an integer between 1 and n.")
-        self.__answers.append(a)
-        if a == self.__correct:
+                f"The answer should be a positive integer between 1 and {self.n-1}.")
+        self.decrease_attempts()
+        if a == self.answer:
             self.solved = True
             return True
-        if a in self.__answers:
-            return False
-        self.decrease_attempts()
         return False
 
 
@@ -156,29 +132,12 @@ class DefinitionExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä määritelmätehtävää.
     """
 
-    def __init__(self, description, attempts, difficulty, hint=None, ex_id=None): # pylint: disable=useless-parent-delegation
-        """ Luokan konstruktori, joka luo uuden monivalintatehtävän.
-        """
-        super().__init__(description, attempts, difficulty, hint, ex_id)
-
 
 class ProblemExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä ongelmatehtävää.
     """
 
-    def __init__(self, description, attempts, difficulty, hint=None, ex_id=None): # pylint: disable=useless-parent-delegation
-        """ Luokan konstruktori, joka luo uuden ongelmatehtävän.
-
-        """
-        super().__init__(description, attempts, difficulty, hint, ex_id)
-
 
 class TheoremExercise(MultipleChoice):
     """ Aliluokka, joka kuvaa yksittäistä teorematehtävää.
     """
-
-    def __init__(self, description, attempts, difficulty, hint=None, ex_id=None): # pylint: disable=useless-parent-delegation
-        """ Luokan konstruktori, joka luo uuden teoreematehtävän.
-
-        """
-        super().__init__(description, attempts, difficulty, hint, ex_id)
