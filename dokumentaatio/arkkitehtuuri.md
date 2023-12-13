@@ -68,12 +68,12 @@ Uuden käyttäjän luonti etenee seuraavasti, kun käyttöliittymän User- ja Pa
 sequenceDiagram
   actor User
   participant UI
-  participant ExerciseService
+  participant UserService
   participant UserRepository
   User->>UI: click "Create user" button
   UI->>UserService: create_user("uusi", "salasana")
-  ExerciseService->>UserRepository: find_by_username("uusi")
-  UserRepository-->>TodoService: user
+  UserService->>UserRepository: find_by_username("uusi")
+  UserRepository-->>UserService: user
   ExerciseService-->>UI: user
   UI->UI: choose_difficulty_view()
 ```
