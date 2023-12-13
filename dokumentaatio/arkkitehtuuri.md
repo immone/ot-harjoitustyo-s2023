@@ -20,7 +20,7 @@ Exercise-luokilla esiintyy aliluokkia, jotka viittaavat tietyntyyppisiin tehtäv
 ```mermaid
  classDiagram
     Game "*" --> "*" User
-    Game "*" --> "1" GroupQuestionGenerator
+    Game "*" --> "1" QuestionGenerator
     Game "*" --> "*" Exercise
       MultipleChoice --|> Exercise
       DefinitionExercise --|> MultipleChoice
