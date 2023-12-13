@@ -1,5 +1,13 @@
 # Arkkitehtuurikuvaus
 
+## Rakenne
+
+Ohjelman rakenne noudattaa kolmitasoista arkkitehtuuria seuraavanlaisesti:
+
+_todo_
+
+Pakkaus _ui_ sisältää käyttöliittymän koodin, _services_ sovelluslogiikan ja käyttöliittymän kommunikaatiosta vastaavan koodin ja _repositories_ vastaa sovelluksen hyödyntämien tietokantojen päivityksestä. Pakkaus _entities_ kattaa sovelluksen hyödyntämiä luokkia.
+
 ## Käyttöliittymä
 
 Käyttöliittymä sisältää viisi erillistä näkymää:
