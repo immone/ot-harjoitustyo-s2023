@@ -74,7 +74,7 @@ sequenceDiagram
   UI->>UserService: create_user("uusi", "salasana")
   UserService->>UserRepository: find_by_username("uusi")
   UserRepository-->>UserService: user
-  ExerciseService-->>UI: user
+  UserService-->>UI: user
   UI->UI: choose_difficulty_view()
 ```
 
