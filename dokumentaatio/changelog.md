@@ -20,3 +20,8 @@
 ## Viikko 6
 - Refaktoroitu luokkia ja tehty tietokantaa selkeämmäksi
 - Lisätty lisää käyttöliittymästä vastaavia luokkia
+
+## Viikko 7 
+- Refaktoroitu ja kirjoitettu _entities_-pakkauksen luokkien koodi lähes kokonaan uusiksi ja yksinkertaisemmaksi.
+- Jaettu _services_-pakkauksen entinen `ExerciseService`-luokka kolmeen erilliseen luokkaan.
+- Kirjoitettu kaikki näkymät valmiiksi _ui_-pakkaukseen.

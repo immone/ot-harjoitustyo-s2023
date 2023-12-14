@@ -1,5 +1,13 @@
 # Arkkitehtuurikuvaus
 
+## Rakenne
+
+Ohjelman rakenne noudattaa kolmitasoista arkkitehtuuria seuraavanlaisesti:
+
+_todo_
+
+Pakkaus _ui_ sisältää käyttöliittymän koodin, _services_ sovelluslogiikan ja käyttöliittymän kommunikaatiosta vastaavan koodin ja _repositories_ vastaa sovelluksen hyödyntämien tietokantojen päivityksestä. Pakkaus _entities_ kattaa sovelluksen hyödyntämiä luokkia.
+
 ## Käyttöliittymä
 
 Käyttöliittymä sisältää viisi erillistä näkymää:
@@ -14,15 +22,14 @@ Jokainen näkymistä on toteutettu omana luokkanaan ja näkymien näyttämisest�
 ## Sovelluslogiikka
 Sovelluksen loogisen tietomallin muodostavat luokat [User](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/src/entities/user.py), [Game](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/src/entities/game.py)
 sekä [Exercises](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/src/entities/exercise.py), jotka kuvaavat yhtä peliä, pelin sisältämiä harjoituksia ja käyttäjää, joka harjoituksia pelaa.
-Lisäksi luokka [QuestionGenerator](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/src/entities/question_generator.py) kuvaa oliota, joka luo tehtäviä.
-QuestionGenerator sekä Exercise-luokilla esiintyy aliluokkia, jotka viittaavat tiettyihin tehtäviin tai niiden generointiin.
+Lisäksi luokka [QuestionGenerator](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/src/entities/question_generator.py) kuvaa oliota, joka hakee pelattavaan peliin halutunlaisia kysymyksiä.
+Exercise-luokilla esiintyy aliluokkia, jotka viittaavat tietyntyyppisiin tehtäviin.
 
 ```mermaid
  classDiagram
     Game "*" --> "*" User
-    Game "*" --> "1" GroupQuestionGenerator
+    Game "*" --> "1" QuestionGenerator
     Game "*" --> "*" Exercise
-      GroupQuestionGenerator --|> QuestionGenerator
       MultipleChoice --|> Exercise
       DefinitionExercise --|> MultipleChoice
       ProblemExercise --|> MultipleChoice
@@ -34,23 +41,17 @@ QuestionGenerator sekä Exercise-luokilla esiintyy aliluokkia, jotka viittaavat 
       }
       class Game{
           type
-          n
-          difficulty
-          done
           user
-          id
+          game_id
       }
       class Exercise{
-          type
-          attempts
+          description
+          content
           difficulty
           hint
-          game
-          id
+          ex_id
       }
       class QuestionGenerator{
-      }
-      class GroupQuestionGenerator{
       }
       class MultipleChoice{
       }
@@ -64,7 +65,7 @@ QuestionGenerator sekä Exercise-luokilla esiintyy aliluokkia, jotka viittaavat 
 
 ## Tietojen pysyväistallennus
 
-Pakkauksen _repositories_ luokat `ExerciseRepository` ja `UserRepository` huolehtivat tietojen tallentamisesta SQLite-tietokantaan.
+Pakkauksen _repositories_ luokat `ExerciseRepository` ja `UserRepository` huolehtivat tietojen tallentamisesta SQLite-tietokantoihin sekä .json-tiedostoksi, jossa sijaitsevat kysymyksien kysymykset, vastaukset ja vastausvaihtoehdot.
 
 
 ## Päätoiminnallisuudet
@@ -75,13 +76,13 @@ Uuden käyttäjän luonti etenee seuraavasti, kun käyttöliittymän User- ja Pa
 sequenceDiagram
   actor User
   participant UI
-  participant ExerciseService
+  participant UserService
   participant UserRepository
   User->>UI: click "Create user" button
   UI->>UserService: create_user("uusi", "salasana")
-  ExerciseService->>UserRepository: find_by_username("kalle")
-  UserRepository-->>TodoService: user
-  ExerciseService-->>UI: user
+  UserService->>UserRepository: find_by_username("uusi")
+  UserRepository-->>UserService: user
+  UserService-->>UI: user
   UI->UI: choose_difficulty_view()
 ```
 
