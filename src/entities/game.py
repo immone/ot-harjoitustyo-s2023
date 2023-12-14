@@ -41,7 +41,7 @@ class Game:
         self.user = user
         self.game_id = game_id or str(uuid.uuid4())
         self.__generator = QuestionGenerator(self.structure, self.game_type, self.user.skill)
-        self.__problems = self.__generator.fetch_problems(1)
+        self.__problems = self.__generator.fetch_problems(5)
         self.done = False
 
     def player(self):
@@ -53,7 +53,10 @@ class Game:
         return self.__problems
 
     def set_done(self, id):
-        self.__problems[id].done = True
+        for ex in self.__problems:
+            if ex.id == id: ex.done = True
+        ## Todo: fix when problems consist of a dict data structure
+        ##self.__problems[id].done = True
 
     def fetch_problems(self, n):
         self.__problems = self.__generator.fetch_problems(n)

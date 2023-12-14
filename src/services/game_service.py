@@ -33,6 +33,9 @@ class GameService():
 
         return self._game.problems()
 
+    def refresh(self):
+        self._game.setter(self._game.fetch_problems(5))
+
     def get_undone_exercises(self):
         """ Palauttaa kirjautuneen käyttäjän tekemättömät tehtävät.
 
@@ -44,7 +47,6 @@ class GameService():
         if not self._game.user:
             return []
 
-        self._game.fetch_problems(1)
         exercises = self._game.problems()
         undone_exercises = filter(
             lambda exercise: not exercise.done, exercises)
