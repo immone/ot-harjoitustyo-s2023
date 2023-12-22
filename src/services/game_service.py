@@ -65,7 +65,6 @@ class GameService():
         exercises = self.get_exercises()
         undone_exercises = filter(
             lambda exercise:  exercise.done is False, exercises)
-        print(exercises)
         return list(undone_exercises)
 
     def set_exercise_done(self, ex_id):

@@ -129,17 +129,19 @@ class ExerciseRepository:
                 content.append(correct)
                 content.append(structure)
 
+                ex_type = ex['type']
+
                 description = ex['description']
                 difficulty = ex['difficulty']
                 hint = ex['hint']
                 id_ex = ex['id']
-                if type == 'definition':
+                if ex_type == 'definition':
                     new = DefinitionExercise(description,
                                              content,
                                              difficulty,
                                              hint,
                                              id_ex)
-                elif type == 'problem':
+                elif ex_type == 'problem':
                     new = ProblemExercise(description,
                                           content,
                                           difficulty,

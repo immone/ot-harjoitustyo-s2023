@@ -47,4 +47,5 @@ class QuestionGenerator:
             if type(e) == q_type and e.structure == self.structure:
                 out.append(e)
         random.shuffle(out)
+        print(out)
         return out[0:n]

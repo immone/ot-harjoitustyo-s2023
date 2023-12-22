@@ -15,5 +15,22 @@
       "correct": 0,
       "id": 1
     }
-          ]
+          ],
+
+    "2":     [
+    {
+      "question": "What is included in the definition of a field?",
+      "options": [
+        "Neutral element under addition",
+        "Neutral element under multiplication",
+        "Both of the above"
+      ],
+      "description": "Field definition",
+      "structure": "field",
+      "type": "definition",
+      "hint": "You don't need one.",
+      "difficulty": "easy",
+      "correct": 2,
+      "id": 2
+    }]
 }
