@@ -1,6 +1,4 @@
-from entities.user import User
 from entities.game import Game
-from repositories.user_repository import user_repository as default_user_repository
 
 
 class GameService():
@@ -17,24 +15,41 @@ class GameService():
         """
         self._game = None
 
-    def create_game(self, type, structure, user):
-        new_game = Game((type, structure), user)
+    def get_current_game(self):
+        """ Hakee pelattavan Game-olion. """
+        return self._game
+
+    def create_game(self, game_type, structure, user):
+        """ Luo Game-olion, joka kuvaa pelattavaa peliä ja palauttaa sen. """
+
+        new_game = Game((game_type, structure), user)
         self._game = new_game
+        self._game.fetch_problems(10)
+        return new_game
 
     def increase_points(self):
+        """ Kasvattaa pelin pisteitä yhdellä. """
+
         if self._game:
-            self._game.user().increase_points()
+            self._game.correct += 1
+
+    def answered(self):
+        """ Hakee vastattujen kysyksien määrän pelattavasta pelistä. """
+
+        return self._game.answered
+
+    def correct(self):
+        """ Hakee oikein vastattujen kysyksien määrän pelattavasta pelistä. """
+
+        return self._game.correct
 
     def get_exercises(self):
-        """ Palauttaa kaikki tehtävät.
-        """
+        """ Palauttaa kaikki tehtävät. """
+
         if not self._game.user:
             return []
 
-        return self._game.problems()
-
-    def refresh(self):
-        self._game.setter(self._game.fetch_problems(5))
+        return self._game.exercises()
 
     def get_undone_exercises(self):
         """ Palauttaa kirjautuneen käyttäjän tekemättömät tehtävät.
@@ -47,10 +62,10 @@ class GameService():
         if not self._game.user:
             return []
 
-        exercises = self._game.problems()
+        exercises = self.get_exercises()
         undone_exercises = filter(
-            lambda exercise: not exercise.done, exercises)
-
+            lambda exercise:  exercise.done is False, exercises)
+        print(exercises)
         return list(undone_exercises)
 
     def set_exercise_done(self, ex_id):
@@ -59,13 +74,9 @@ class GameService():
         Args:
             todo_id: Merkkijonoarvo, joka kuvaa tehtävän id:tä.
         """
+        if self._game:
+            self._game.answered += 1
+            self._game.set_done(ex_id)
 
-        self._game.set_done(ex_id)
-
-
-    def logout(self):
-        """Kirjaa nykyisen käyttäjän ulos.
-        """
-        self._user = None
 
 game_service = GameService()

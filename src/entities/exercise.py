@@ -7,18 +7,22 @@ class Exercise:
         Attributes:
             description:
                 Merkkijonoarvo, joka kuvaa tehtävää.
-            difficulty:
-                Merkkijono, joka kuvaa tehtävän vaikeutta.
             content:
                 Lista. Sisältää tehtävän sisällön; sen ensimmäinen
                 alkio on tehtävän kysymys, seuraavat alkiot vaihtoehtoja ja
                 viimeinen alkio oikea vastaus.
+            difficulty:
+                Merkkijono, joka kuvaa tehtävän vaikeutta.
             hint:
                 Vapaaehtoinen, oletusarvoltaan None.
                 Merkkijonoarvo, joka on tehtäväkohtainen vihje.
             ex_id:
                 Vapaaehtoinen, oletusarvoltaan generoitu uuid.
                 Merkkijonoarvo, joku kuvaa tehtävän id:tä.
+            solved:
+                Merkkijono, kuvaa onko tehtävä tehty oikein.
+            self.done:
+                Merkkijono, kuvaa onko tehtävä tehty.
     """
 
     def __init__(self, description, content, difficulty, hint=None, ex_id=None):
@@ -27,12 +31,12 @@ class Exercise:
         Args:
             description:
                 Merkkijonoarvo, joka kuvaa tehtävää.
-            difficulty:
-                Merkkijono, joka kuvaa tehtävän vaikeutta.
             content:
                 Lista. Sisältää tehtävän sisällön; sen ensimmäinen
                 alkio on tehtävän kysymys, seuraavat alkiot vaihtoehtoja ja
                 viimeinen alkio oikea vastaus.
+            difficulty:
+                Merkkijono, joka kuvaa tehtävän vaikeutta.
             hint:
                 Vapaaehtoinen, oletusarvoltaan None.
                 Merkkijonoarvo, joka on tehtäväkohtainen vihje.
@@ -63,7 +67,7 @@ class Exercise:
         """ Parametriton metodi, joka päättää tehtävän.
 
         Returns:
-            Palauttaa True, jos harjoitus on ohi.
+            Palauttaa True, jos harjoitus on ratkaistu oikein.
             Muussa tapauksessa palauttaa False.
         """
         self.done = True
@@ -97,12 +101,13 @@ class MultipleChoice(Exercise):
 
         """
         self.n = len(content)
-        if self.n < 3:
+        if self.n != 6:
             raise ValueError(
-                "A multiple choice exercise should have at least one question")
+                "The exercise needs one question, three options, one answer and the algebraic structure of the exercise")
         self.question = content[0]
-        self.options = content[1:-1]
-        self.answer = content[-1]
+        self.options = content[1:-2]
+        self.answer = content[-2]
+        self.structure = content[-1]
         if self.answer < 0 or self.answer >= self.n:
             raise ValueError(
                 "The correct choice should be one of the options")
@@ -118,7 +123,7 @@ class MultipleChoice(Exercise):
                 True, jos vastaus on oikein.
                 False, jos vastaus on väärin.
         """
-        if a < 0 or a > self.n:
+        if a < 0 or a > 2:
             raise ValueError(
                 f"The answer should be a positive integer between 1 and {self.n-1}.")
         self.decrease_attempts()

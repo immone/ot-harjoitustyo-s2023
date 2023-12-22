@@ -4,27 +4,30 @@ import json
 class Parser:
     """ Luokka, joka lukee tehtävät .json-tiedostosta.
         Attributes:
-            self.exercises:
+            _exercises:
                 Lista, johon .json-tiedoston tehtävät luetaan
-            exercise_count:
-                Kokonaislukuarvo, joka kuvaa luettujen tehtävien määrää
+            _ids:
+                Lista, johon tehtävien id:t luetaan.
     """
 
     def __init__(self):
         self._exercises = []
         self._ids = []
-        self.exercise_count = len(self._exercises)
 
     def get_ex(self):
         """ Palauttaa tehtävät dict-tyyppisenä. """
         return self._exercises
 
     def get_ids(self):
-        """ Palauttaa tehtävien id:t listana '"""
+        """ Palauttaa tehtävien id:t listana. """
         return self._ids
 
+    def exercise_count(self):
+        """ Palauttaa tehtävien lukumäärän."""
+        return len(self._exercises)
+
     def parse(self, exercise_file):
-        """ Lukee tehtävät listaksi, joka koostuu dict-tyyppisistä tehtävistä.
+        """ Lukee tehtävät ja niiden id:t ja lisää ne attribuuttien listoihin.
 
             Args:
                 execise_file:

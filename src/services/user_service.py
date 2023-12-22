@@ -1,12 +1,14 @@
 from entities.user import User
 from repositories.user_repository import user_repository as default_user_repository
 
+
 class InvalidCredentialsError(Exception):
     pass
 
 
 class UsernameExistsError(Exception):
     pass
+
 
 class UserService():
     """ Sovelluslogiikassa käyttäjien tietokannan ja sovelluksen välisestä
@@ -57,6 +59,11 @@ class UserService():
 
         return user
 
+    def logout(self):
+        """Kirjaa nykyisen käyttäjän ulos.
+        """
+        self._user = None
+
     def get_current_user(self):
         """Paluttaa kirjautuunen käyttäjän.
 
@@ -87,11 +94,13 @@ class UserService():
         if existing_user:
             raise UsernameExistsError(f"Username {username} already exists")
 
-        user = self._user_repository.create(User(username, password, skill="easy"))
+        user = self._user_repository.create(
+            User(username, password, skill="easy"))
 
         if login:
             self._user = user
 
         return user
+
 
 user_service = UserService()

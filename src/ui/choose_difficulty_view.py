@@ -37,7 +37,7 @@ class ChooseDifficultyView:
         self._frame.destroy()
 
     def _logout_handler(self):
-        game_service.logout()
+        user_service.logout()
         self._handle_logout()
 
     def _show_error(self, message):
@@ -81,9 +81,9 @@ class ChooseDifficultyView:
     def _initialize_difficult_view(self):
         self._difficulty_variable = tk.StringVar()
         easy = ttk.Radiobutton(master=self._frame,
-                                text='Easy',
-                                var=self._difficulty_variable,
-                                value='easy')
+                               text='Easy',
+                               var=self._difficulty_variable,
+                               value='easy')
 
         hard = ttk.Radiobutton(master=self._frame,
                                text='Hard',
@@ -118,7 +118,6 @@ class ChooseDifficultyView:
         )
 
         self._error_label.grid(padx=5, pady=5)
-
 
         self._frame.grid_columnconfigure(0, weight=1, minsize=400)
 

@@ -1,22 +1,8 @@
-from entities.exercise import DefinitionExercise
-# Refaktoroi johonkin järkevämpään paikkaan
+import random
+from entities.exercise import DefinitionExercise, TheoremExercise, ProblemExercise
+from repositories.exercise_repository import ex_repository
 
-QUESTIONS = [
-            ["Associativity, an inverse element under an operation and a neutral element",
-             "Commutativity, an inverse element under an operation and a neutral element",
-             "Distributivity, an inverse element under an operation and a neutral element"]
-]
 
-MOCK_YAML = {"id": {"difficulty": "Easy",
-                    "description": "Group definition",
-                    "correct": 0,
-                    "attempts": 2,
-                    'hint':   "You don't need one.",
-                    "options": QUESTIONS,
-                    "question": "What is included in the definition of a group?",
-                    "id": 1337
-                    }
-             }
 class QuestionGenerator:
     """Luokka, joka generoi tehtäväkysymyset.
 
@@ -25,9 +11,11 @@ class QuestionGenerator:
             Merkkijonoarvo, joka kuvaa kysymysten vaikeustasoa.
         type:
             Merkkijonoarvo, joka kuvaa kysymysten tyyppiä.
+        structure:
+            Kysymyksien tyyppi.
     """
 
-    def __init__(self, structure, type, difficulty):
+    def __init__(self, ex_type, difficulty, structure):
         """Luokan konstruktori, joka luo uuden kysymysgeneraattorin.
 
         Args:
@@ -37,19 +25,26 @@ class QuestionGenerator:
                 Merkkijonoarvo, joka kuvaa kysymysten tyyppiä.
         """
         self.difficulty = difficulty
-        self.type = type
+        self.type = ex_type
+        self.structure = structure
 
     def fetch_problems(self, n):
-        """ Metodi, joka palauttaa kirjaston generoituja kysymyksiä."""
+        """ Metodi, joka palauttaa parametrin n osoittaman
+            kokoisen listan satunnaisesti generoituja kysymyksiä.
+        """
+
+        if self.type == 'definition':
+            q_type = DefinitionExercise
+        elif self.type == 'theorem':
+            q_type = TheoremExercise
+        else:
+            q_type = ProblemExercise
 
         out = []
-        for q in range(n):  # pylint: disable=unused-variable
-            new_problem = self.fetch_problem()
-            out.append(new_problem)
-        return out
-
-    def fetch_problem(self):
-        return DefinitionExercise("kysymys",
-                                  ["ok", "a", "b", "c", 1],
-                                  "easy"
-                                  )
+        exercises = ex_repository.find_all_by_difficulty(self.difficulty)
+        n = min(n, len(exercises))
+        for e in exercises:
+            if type(e) == q_type and e.structure == self.structure:
+                out.append(e)
+        random.shuffle(out)
+        return out[0:n]

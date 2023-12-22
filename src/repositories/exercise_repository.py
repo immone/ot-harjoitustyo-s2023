@@ -1,10 +1,8 @@
 from pathlib import Path
 import json
-from config import EXERCISES_FILE_PATH # pylint: disable=import-error
+from config import EXERCISES_FILE_PATH  # pylint: disable=import-error
 from entities.parser import Parser
-from entities.exercise import DefinitionExercise
-
-# Todo: Make own repositories for each # subclass of exercises pylint: disable=fixme
+from entities.exercise import DefinitionExercise, TheoremExercise, ProblemExercise
 
 
 class ExerciseRepository:
@@ -39,28 +37,12 @@ class ExerciseRepository:
                 """
 
         exercises = self.find_all()
-
-        difficulty_exercises = filter(
-            lambda exercise: exercise.user and exercise.difficulty == difficulty, exercises)
-
-        return difficulty_exercises
-
-    def find_by_username(self, username):
-        """Palauttaa käyttäjän tehtävät.
-
-        Args:
-            username: Käyttäjän käyttäjätunnus, jonka tehtävät palautetaan.
-
-        Returns:
-            Palauttaa listan Exercise-olioita.
-        """
-
-        exercises = self.find_all()
-
-        user_exercises = filter(
-            lambda exercise: exercise.user and exercise.user.username == username, exercises)
-
-        return list(user_exercises)
+        out = []
+        exercises = filter(
+            lambda exercise: exercise.difficulty == difficulty, exercises)
+        for e in exercises:
+            out.append(e)
+        return out
 
     def create(self, exercise):
         """Tallentaa tehtävän tietokantaan.
@@ -124,35 +106,62 @@ class ExerciseRepository:
         Path(self._file_path).touch()
 
     def _read(self):
-        """ Lukee tehtävät tietokantaan.
+        """ Lukee tehtävät tietokannasta Exercise-olioiksi.
         """
 
         ex_out = []
-
         self._ensure_file_exists()
         parser = Parser()
         parser.parse(EXERCISES_FILE_PATH)
         exercises = parser.get_ex()
-        ids = parser.get_ids()
-        for id in ids:
+        for ex in exercises:
+            ex = ex[0]
             try:
-                ex = exercises[id]
                 options = ex['options']
                 question = ex['question']
                 correct = ex['correct']
-                new_exercise = DefinitionExercise(ex['type'],
-                                                  ex['attempts'],
-                                                  ex['difficulty'],
-                                                  ex['hint'],
-                                                  ex['id']
-                                                  )
-                new_exercise.set_question(question, options, correct)
+                structure = ex['structure']
+
+                content = []
+                content.append(question)
+                for opt in options:
+                    content.append(opt)
+                content.append(correct)
+                content.append(structure)
+
+                description = ex['description']
+                difficulty = ex['difficulty']
+                hint = ex['hint']
+                id_ex = ex['id']
+                if type == 'definition':
+                    new = DefinitionExercise(description,
+                                             content,
+                                             difficulty,
+                                             hint,
+                                             id_ex)
+                elif type == 'problem':
+                    new = ProblemExercise(description,
+                                          content,
+                                          difficulty,
+                                          hint,
+                                          id_ex)
+                else:
+                    new = TheoremExercise(description,
+                                          content,
+                                          difficulty,
+                                          hint,
+                                          id_ex)
+                ex_out.append(new)
             except TypeError:
-                print("Faulty exercise on ID", id)
+                print("Faulty exercise in DB.")
 
         return ex_out
 
     def _write(self, exercises):
+        """ Kirjoittaa tietokantaan.
+
+        Todo: Korjaa vastaamaan nykyistä .json-formaattia.
+        """
         self._ensure_file_exists()
 
         data = {}

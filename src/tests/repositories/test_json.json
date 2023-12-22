@@ -1,5 +1,5 @@
 {
-  "1":     [
+  "1": [
     {
       "question": "What is included in the definition of a group?",
       "options": [
@@ -15,5 +15,5 @@
       "correct": 0,
       "id": 1
     }
-          ]
+  ]
 }

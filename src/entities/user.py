@@ -2,11 +2,14 @@ class User:
     """Luokka, joka kuvaa yksittäistä käyttäjää.
 
     Attributes:
-        username: Merkkijonoarvo, joka kuvaa käyttäjän käyttäjätunnusta.
-        password: Merkkijonoarvo, joka kuvaa käyttäjän salasanaa.
-        skill: Merkkijonoarvo, joka kuvaa tehtävien vaikeustasoa.
-        correct: Kokonaislukuarvo, joka kuvaa oikeiden tehtävien lukumäärää
-        allGames: Lista, joka kuvaa kaikkia pelattuja pelejä.
+        username:
+            Merkkijonoarvo, joka kuvaa käyttäjän käyttäjätunnusta.
+        password:
+            Merkkijonoarvo, joka kuvaa käyttäjän salasanaa.
+        skill:
+            Merkkijonoarvo, joka kuvaa tehtävien vaikeustasoa.
+        correct:
+            Kokonaislukuarvo, joka kuvaa oikeiden tehtävien lukumäärää
     """
 
     def __init__(self, username, password, skill):
@@ -17,6 +20,8 @@ class User:
                 Merkkijonoarvo, joka kuvaa käyttäjän käyttäjätunnusta.
             password:
                 Merkkijonoarvo, joka kuvaa käyttäjän salasanaa.
+            skill:
+                Merkkijonoarvo, joka kuvaa käyttäjän (tai pelin) vaikeustasoa.
         """
 
         self.username = username
@@ -38,9 +43,3 @@ class User:
         """
 
         return self.__correct
-
-    def increase_points(self):
-        """ Metodi, joka kasvattaa pelaajan oikeita pisteitä yhdellä.
-        """
-
-        self.__correct += 1

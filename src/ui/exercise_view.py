@@ -3,6 +3,7 @@ from tkinter import ttk, constants
 from services.user_service import user_service
 from services.game_service import game_service
 
+
 class ExerciseView:
     """Tehtävien listauksesta ja lisäämisestä vastaava näkymä."""
 
@@ -73,40 +74,41 @@ class ExerciseView:
         type_label = ttk.Label(self._frame, text="Algebraic structure")
         type_label.grid(row=0, column=0, padx=5, pady=5, sticky=constants.E)
         group = ttk.Radiobutton(master=self._frame,
-                               text='Group',
-                               var=self._structure_variable,
-                               value='group')
+                                text='Group',
+                                var=self._structure_variable,
+                                value='group')
 
         ring = ttk.Radiobutton(master=self._frame,
-                                text='Ring',
-                                var=self._structure_variable,
-                                value='ring')
+                               text='Ring',
+                               var=self._structure_variable,
+                               value='ring')
 
         field = ttk.Radiobutton(master=self._frame,
-                               text='Field',
-                               var=self._structure_variable,
-                               value='field')
+                                text='Field',
+                                var=self._structure_variable,
+                                value='field')
 
-        ring.grid(row=1, column=0, padx=10, pady=10,sticky=constants.E)
-        group.grid(row=2, column=0, padx=10, pady=10,sticky=constants.E)
-        field.grid(row=3, column=0, padx=10, pady=10,sticky=constants.E)
+        ring.grid(row=1, column=0, padx=10, pady=10, sticky=constants.E)
+        group.grid(row=2, column=0, padx=10, pady=10, sticky=constants.E)
+        field.grid(row=3, column=0, padx=10, pady=10, sticky=constants.E)
 
         question_label = ttk.Label(self._frame, text="Question type")
-        question_label.grid(row=0, column=0, padx=5, pady=5, sticky=constants.N)
+        question_label.grid(row=0, column=0, padx=5,
+                            pady=5, sticky=constants.N)
         definition = ttk.Radiobutton(master=self._frame,
-                                text='Definition',
-                                var=self._type_variable,
-                                value='def')
+                                     text='Definition',
+                                     var=self._type_variable,
+                                     value='definition')
 
         problem = ttk.Radiobutton(master=self._frame,
-                               text='Problem',
-                               var=self._type_variable,
-                               value='prob')
+                                  text='Problem',
+                                  var=self._type_variable,
+                                  value='problem')
 
         theorem = ttk.Radiobutton(master=self._frame,
-                                text='Theorem',
-                                var=self._type_variable,
-                                value='theorem')
+                                  text='Theorem',
+                                  var=self._type_variable,
+                                  value='theorem')
 
         definition.grid(row=1, column=0, padx=10, pady=10, sticky=constants.N)
         problem.grid(row=2, column=0, padx=10, pady=10, sticky=constants.N)
