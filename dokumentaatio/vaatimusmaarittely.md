@@ -23,8 +23,7 @@ teoreemien kertaamiseen. (tehty)
 - Löydettyään sopivan aihealueen käyttäjä siirtyy itse tehtävien tekemiseen.
 
 ## Tehtävien tekeminen
-- Tehtävätyypistä riippuen käyttäjä voi vastata joko monivalinnalla
-tai syöttää vastauksen suoraan alueelle, mistä tarkastetaan sen oikeus ja 
+- Tehtävätyypistä riippuen käyttäjä voi vastata monivalinnalla mistä tarkastetaan sen oikeus ja 
 annetaan käyttäjälle palautetta.
 - Käyttäjällä on mahdollisuus palata edelliseen näkymään, mikäli hän
 haluaisi vaihtaa tehtävätyyppiä tai -aihetta.
