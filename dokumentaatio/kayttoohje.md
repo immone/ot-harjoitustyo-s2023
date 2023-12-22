@@ -33,4 +33,21 @@ poetry run invoke start
 
 ## Uuden käyttäjän luominen
 
-Kirjautumisnäkymästä on mahdollista siirtyä uuden käyttäjän luomisnäkymään panikkeella "Create user".
+Kirjautumisnäkymästä on mahdollista siirtyä uuden käyttäjän luomisnäkymään panikkeella "Create user" ja antamalla käyttäjätunnuksen sekä salasanan.
+
+## Vaikeustason valitseminen
+
+Seuraavassa käyttöliittymässä valitaan tehtävien vaikeustaso.
+Annetussa tietokannassa on vain helpon tason kysymys, valitse siis "Easy" ja paina "Choose difficulty".
+
+## Tehtävätyyppien valitseminen
+
+Avautuvassa käyttöliittymässä valitaan tehtävien tyyppi.
+Annetussa tietokannassa on vain ryhmäteorian määritelmäkysymys, valitse siis "Group" ja "Definition".
+
+## Tehtävien tekeminen
+
+Voit valita avautuvassa käyttöliitttymässä halutun kertaustehtävän. Paina "Choose", jolloin se aukeaa uuteen ikkunaan.
+
+## Tehtävän vastaaminen
+Valitse vastausvaihtoehto ja vastaa, jolloin uusi ikkuna antaa palautteen.
