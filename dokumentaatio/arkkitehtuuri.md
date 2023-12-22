@@ -2,9 +2,7 @@
 
 ## Rakenne
 
-Ohjelman rakenne noudattaa kolmitasoista arkkitehtuuria seuraavanlaisesti:
-
-_todo_
+Ohjelman rakenne noudattaa kolmitasoista arkkitehtuuria, joka koostuu käyttöliittymästä, sovellusloogikan ja käyttöliittymän välisestä kommunikaatiosta vastaavista luokista sekä pysyväistietojen tallennuksesta vastaavista luokista.
 
 Pakkaus _ui_ sisältää käyttöliittymän koodin, _services_ sovelluslogiikan ja käyttöliittymän kommunikaatiosta vastaavan koodin ja _repositories_ vastaa sovelluksen hyödyntämien tietokantojen päivityksestä. Pakkaus _entities_ kattaa sovelluksen hyödyntämiä luokkia.
 
@@ -14,8 +12,8 @@ Käyttöliittymä sisältää viisi erillistä näkymää:
 * Kirjautuminen ja käyttäjän luonti
 * Käyttäjän vaikeustason valitseminen
 * Harjoituksien vaikeustason ja kysymyksien tyypin valitseminen 
-* Kaikki valikoituja harjoituksia vastaaavat kysymykset (kesken)
-* Yksittäinen kysymys (kesken)
+* Kaikki valikoituja harjoituksia vastaaavat kysymykset 
+* Yksittäinen kysymys 
 
 Jokainen näkymistä on toteutettu omana luokkanaan ja näkymien näyttämisestä vastaa [UI-luokka](https://github.com/immone/ot-harjoitustyo-s2023/blob/master/src/ui/ui.py).
 
