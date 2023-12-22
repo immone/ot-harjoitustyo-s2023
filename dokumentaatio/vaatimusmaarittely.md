@@ -29,7 +29,9 @@ annetaan käyttäjälle palautetta.
 haluaisi vaihtaa tehtävätyyppiä tai -aihetta.
 
 ## Jatkokehitysideoita
+- Käyttäjällä on mahdollisuus palata tehtävänäkymästä edelliseen näkymään, mikäli hän
+haluaisi vaihtaa tehtävätyyppiä tai -aihetta.
 - Kuinka implementoida eri tehtävätyyppien vastaaminen järkevästi:
 esimerkiksi riittääkö pelkät monivalinnat vai onko järkevää lisätä 
 vastauslaatikko?
-
+- Käyttäjä voi itse syöttää sovelluksessa kysymyksiä, jotka tallennetaan tietokantaan.
