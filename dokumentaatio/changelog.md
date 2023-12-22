@@ -25,3 +25,4 @@
 - Refaktoroitu ja kirjoitettu _entities_-pakkauksen luokkien koodi lähes kokonaan uusiksi ja yksinkertaisemmaksi.
 - Jaettu _services_-pakkauksen entinen `ExerciseService`-luokka kolmeen erilliseen luokkaan.
 - Kirjoitettu kaikki näkymät valmiiksi _ui_-pakkaukseen.
+- Kirjoitettu testit loppuun sekä viimeistelty luokkien refaktorointi.
