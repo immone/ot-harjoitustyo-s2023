@@ -28,3 +28,15 @@ poetry run invoke build
 ```bash
 poetry run invoke start
 ```
+
+Testikattavuuden generointi tapahtuu komennolla 
+
+```bash
+poetry run invoke coverage html
+```
+
+ja projektin linttaus komennolla
+
+```bash
+poetry run pylint src
+```
